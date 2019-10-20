@@ -39,24 +39,25 @@ namespace SecretSanta
         }
 
         //Seperate Lists for senders and recievers and take out when used
+        //Make a method to generate the random number
         public void GeneratePairs()
         {
             var rnd = new Random();
             for (int sendingUser = 0; sendingUser < _participants.Count; sendingUser++)
             {
-                var recievingUser = rnd.Next(0, (_participants.Count - 1));
+                var recievingUser = rnd.Next(0, (_participants.Count));
                 bool invalidPair = true;
 
                 do
                 {
-
+                    Console.WriteLine($"We are at the start of the do: {recievingUser}");
                     if (sendingUser == recievingUser)
                     {
-                        recievingUser = rnd.Next(0, (_participants.Count - 1));
+                        recievingUser = rnd.Next(0, (_participants.Count));
                     }
                     else if (_usedRecievers.Contains(recievingUser))
                     {
-                        recievingUser = rnd.Next(0, (_participants.Count - 1));
+                        recievingUser = rnd.Next(0, (_participants.Count));
                     }
                     else
                     {
