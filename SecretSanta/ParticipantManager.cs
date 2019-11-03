@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SecretSanta
 {
@@ -17,6 +18,7 @@ namespace SecretSanta
             _giveRecievePairs = new Dictionary<int, int>();
         }
 
+        //Ensure no duplicate name or email addresses
         public void AddParticipant()
         {
             Console.WriteLine("Enter Participant Name: ");
@@ -32,8 +34,10 @@ namespace SecretSanta
         {
             foreach(var participant in _participants)
             {
+                string unallowedPairList = String.Empty;
+                participant.UnallowedPairs.ForEach(x => unallowedPairList = unallowedPairList + $", {x}");
                 Console.WriteLine($"Name: {participant.Name}, Email: " +
-                    $"{participant.EmailAddress}");
+                    $"{participant.EmailAddress} NoNo List: {unallowedPairList}");
 
             }
         }
@@ -42,35 +46,59 @@ namespace SecretSanta
         //Make a method to generate the random number
         public void GeneratePairs()
         {
+
+            int senderAttempts = 0;
+            _usedRecievers = new List<int>();
+            _giveRecievePairs = new Dictionary<int, int>();
+
             var rnd = new Random();
             for (int sendingUser = 0; sendingUser < _participants.Count; sendingUser++)
             {
-                var recievingUser = rnd.Next(0, (_participants.Count));
+                var recievingUser = rnd.Next(0, _participants.Count);
                 bool invalidPair = true;
+                var senderUnallowed = _participants[sendingUser].UnallowedPairs;
+                senderAttempts = 0;
 
                 do
                 {
-                    Console.WriteLine($"We are at the start of the do: {recievingUser}");
+                    var recieverEmail = _participants[recievingUser].EmailAddress;
+
                     if (sendingUser == recievingUser)
                     {
                         recievingUser = rnd.Next(0, (_participants.Count));
+                        senderAttempts++;
                     }
                     else if (_usedRecievers.Contains(recievingUser))
                     {
                         recievingUser = rnd.Next(0, (_participants.Count));
+                        senderAttempts++;
+                    }
+                    else if (senderUnallowed.Contains(recieverEmail))
+                    {
+                        recievingUser = rnd.Next(0, (_participants.Count));
+                        senderAttempts++;
                     }
                     else
                     {
                         invalidPair = false;
-
                     }
 
                 }
-                while (invalidPair);
+                while (invalidPair && senderAttempts < 15);
+
+                if(senderAttempts == 15)
+                {
+                    break;
+                }
 
                 _usedRecievers.Add(recievingUser);
                 _giveRecievePairs.Add(sendingUser, recievingUser);
 
+            }
+
+            if(senderAttempts == 15)
+            {
+                GeneratePairs();
             }
 
         }
@@ -84,7 +112,32 @@ namespace SecretSanta
             }
         }
 
-        
-        
+        public void AddUnallowedPair()
+        {
+            try
+            {
+                Console.WriteLine("Enter First Participants Email: ");
+                string emailOne = Console.ReadLine();
+                Participant participantOne = _participants.Single(x => x.EmailAddress == emailOne);
+
+                Console.WriteLine("Enter Second Participants Email: ");
+                string emailTwo = Console.ReadLine();
+                Participant participantTwo = _participants.Single(x => x.EmailAddress == emailTwo);
+
+                participantOne.AddToUnallowedPairs(emailTwo);
+                participantTwo.AddToUnallowedPairs(emailOne);
+
+                _participants[_participants.FindIndex(x => x.EmailAddress == emailOne)] = participantOne;
+                _participants[_participants.FindIndex(x => x.EmailAddress == emailTwo)] = participantTwo;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Invalid Email Has Been Entered, Exception: {ex.ToString()}");
+            }
+
+        }
+
+
+
     }
 }

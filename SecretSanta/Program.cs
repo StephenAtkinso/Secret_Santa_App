@@ -10,6 +10,7 @@ namespace SecretSanta
         {
 
             var participantManager = new ParticipantManager();
+            //var fileManager = new FileManager();
             bool notQuit = true;
 
             while (notQuit)
@@ -27,15 +28,29 @@ namespace SecretSanta
                     case "listuser":
                         participantManager.ListParticipants();
                         break;
-                    case "savelist":
-                        break;
+                    //case "savelist":
+                        //fileManager.Save(participantManager._participants);
+                        //break;
                     case "generatepairs":
                         participantManager.GeneratePairs();
                         participantManager.ListPairs();
                         break;
+                    case "addunallowedpair":
+                        participantManager.AddUnallowedPair();
+                        break;
+                    case "help":
+                        PrintHelp();
+                        break;
          
                 }
             }
+        }
+
+        private static void PrintHelp()
+        {
+            Console.WriteLine("These are the commands that you can use:");
+            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nhelp\nquit");
+
         }
     }
 }
