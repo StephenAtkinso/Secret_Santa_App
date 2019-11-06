@@ -1,6 +1,5 @@
 #Our Config File
-/setup.config
-setup.config
+*.config
 
 # globs
 Makefile.in
