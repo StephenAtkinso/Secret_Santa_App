@@ -10,7 +10,8 @@ namespace SecretSanta
         {
 
             var participantManager = new ParticipantManager();
-            //var fileManager = new FileManager();
+			//var fileManager = new FileManager();
+			var emailManager = new EmailManager();
             bool notQuit = true;
 
             while (notQuit)
@@ -38,6 +39,9 @@ namespace SecretSanta
                     case "addunallowedpair":
                         participantManager.AddUnallowedPair();
                         break;
+					case "sendpairemails":
+						emailManager.sendEmails();
+						break;
                     case "help":
                         PrintHelp();
                         break;
