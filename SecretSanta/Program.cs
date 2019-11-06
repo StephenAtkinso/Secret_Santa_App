@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace SecretSanta
 {
@@ -7,10 +8,13 @@ namespace SecretSanta
     {
         static void Main(string[] args)
         {
+            //Add app.config file with these properties
+            string sendingEmailAddress = ConfigurationManager.AppSettings["sendingemailaddress"];
+            string sendingEmailPassword = ConfigurationManager.AppSettings["sendingemailpassword"];
 
             var participantManager = new ParticipantManager();
 			//var fileManager = new FileManager();
-			var emailManager = new EmailManager();
+			var emailManager = new EmailManager(sendingEmailAddress, sendingEmailPassword);
             bool notQuit = true;
 
             while (notQuit)
@@ -38,13 +42,16 @@ namespace SecretSanta
                     case "addunallowedpair":
                         participantManager.AddUnallowedPair();
                         break;
-					case "sendanemail":
-						emailManager.sendEmails();
+					case "sendemails":
+                        //Get these better
+						emailManager.SendEmails(participantManager._participants, participantManager._giveRecievePairs);
 						break;
                     case "help":
                         PrintHelp();
                         break;
-         
+                    default:
+                        Console.WriteLine("Command not recognised. Type help to see a list of commands");
+                        break;
                 }
             }
         }
@@ -52,7 +59,7 @@ namespace SecretSanta
         private static void PrintHelp()
         {
             Console.WriteLine("These are the commands that you can use:");
-            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nhelp\nquit");
+            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nsend emails\nhelp\nquit");
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -7,12 +8,16 @@ namespace SecretSanta
 {
     public class EmailManager
     {
-        public EmailManager()
-        {
+        private string _sendingEmailAddress;
+        private string _sendingEmailPassword;
 
+        public EmailManager(string sendingEmailAddress, string sendingEmailPassword)
+        {
+            _sendingEmailAddress = sendingEmailAddress;
+            _sendingEmailPassword = sendingEmailPassword;
         }
 
-        public void sendEmails()
+        public void SendEmails(List<Participant> participants, Dictionary<int, int> giveRecievePairs)
         {
             try
             {
@@ -22,30 +27,33 @@ namespace SecretSanta
                 mySmtpClient.UseDefaultCredentials = false;
                 mySmtpClient.Port = 587;
                 mySmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                NetworkCredential emailCredentials = new NetworkCredential("anemail", "apassword");
+                NetworkCredential emailCredentials = new NetworkCredential(_sendingEmailAddress, _sendingEmailPassword);
                 mySmtpClient.EnableSsl = true;
                 mySmtpClient.Credentials = emailCredentials;
 
-                // add from,to mailaddresses
                 MailAddress from = new MailAddress(emailCredentials.UserName);
-                MailAddress to = new MailAddress("sendtoemail");
-                MailMessage myMail = new System.Net.Mail.MailMessage(from, to);
 
-                //// add ReplyTo
-                //MailAddress replyTo = new MailAddress("reply@example.com");
-                //myMail.ReplyToList.Add(replyTo);
+                foreach (var pair in giveRecievePairs) 
+                {
+                    Participant sender = participants[pair.Key];
+                    Participant reciever = participants[pair.Value];
 
-                // set subject and encoding
-                myMail.Subject = "Hello I am an app";
-                myMail.SubjectEncoding = System.Text.Encoding.UTF8;
+                    MailAddress to = new MailAddress(sender.EmailAddress);
+                    MailMessage myMail = new System.Net.Mail.MailMessage(from, to);
 
-                // set body-message and encoding
-                myMail.Body = "<b>Test Mail</b><br>Denver is fat, Storm is cute - You just got santa emailed by the bois.";
-                myMail.BodyEncoding = System.Text.Encoding.UTF8;
-                // text or html
-                myMail.IsBodyHtml = true;
+                    // set subject and encoding
+                    myMail.Subject = "Secret Santa Test Run";
+                    myMail.SubjectEncoding = System.Text.Encoding.UTF8;
 
-                mySmtpClient.Send(myMail);
+                    // set body-message and encoding
+                    myMail.Body = $"You are giving a gift to {reciever.Name}<br><br>Denver is fat, Storm is cute - You just got santa emailed by the bois.";
+                    myMail.BodyEncoding = System.Text.Encoding.UTF8;
+                    
+                    // text or html
+                    myMail.IsBodyHtml = true;
+
+                    mySmtpClient.Send(myMail);
+                }
                 
             }
             catch(Exception ex)
