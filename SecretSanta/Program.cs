@@ -29,6 +29,9 @@ namespace SecretSanta
                     case "quit":
                         notQuit = false;
                         break;
+                    case "beep":
+                        Console.Beep();
+                        break;
                     case "listusers":
                         participantManager.ListParticipants();
                         break;
@@ -50,7 +53,9 @@ namespace SecretSanta
                         PrintHelp();
                         break;
                     default:
+                        Console.ForegroundColor = System.ConsoleColor.Red;
                         Console.WriteLine("Command not recognised. Type help to see a list of commands");
+                        Console.ResetColor();
                         break;
                 }
             }
