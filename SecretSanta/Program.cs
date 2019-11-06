@@ -5,7 +5,6 @@ namespace SecretSanta
 {
     class Program
     {
-
         static void Main(string[] args)
         {
 
@@ -39,7 +38,7 @@ namespace SecretSanta
                     case "addunallowedpair":
                         participantManager.AddUnallowedPair();
                         break;
-					case "sendpairemails":
+					case "sendanemail":
 						emailManager.sendEmails();
 						break;
                     case "help":
