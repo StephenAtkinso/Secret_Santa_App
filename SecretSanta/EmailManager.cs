@@ -1,9 +1,9 @@
 ﻿using System;
 namespace SecretSanta
 {
-    public class EmptyClass
+    public class EmailManager
     {
-        public EmptyClass()
+        public EmailManager()
         {
         }
     }
