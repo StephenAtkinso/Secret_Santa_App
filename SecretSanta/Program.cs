@@ -16,7 +16,7 @@ namespace SecretSanta
 
             while (notQuit)
             {
-                Console.WriteLine("Enter What you would like to do: ");
+                Console.WriteLine("Enter what you would like to do: ");
                 string userPref = Console.ReadLine();
                 switch (userPref.ToLower().Replace(" ", "")) {
 
@@ -26,7 +26,7 @@ namespace SecretSanta
                     case "quit":
                         notQuit = false;
                         break;
-                    case "listuser":
+                    case "listusers":
                         participantManager.ListParticipants();
                         break;
                     //case "savelist":
