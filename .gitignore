@@ -1,3 +1,7 @@
+#Our Config File
+/setup.config
+setup.config
+
 # globs
 Makefile.in
 *.userprefs
