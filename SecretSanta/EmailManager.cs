@@ -42,11 +42,12 @@ namespace SecretSanta
                     MailMessage myMail = new System.Net.Mail.MailMessage(from, to);
 
                     // set subject and encoding
-                    myMail.Subject = "Secret Santa Test Run";
+                    var theDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+                    myMail.Subject = $"Secret Santa Test Run {theDate}";
                     myMail.SubjectEncoding = System.Text.Encoding.UTF8;
 
                     // set body-message and encoding
-                    myMail.Body = $"You are giving a gift to {reciever.Name}<br><br>Denver is fat, Storm is cute - You just got santa emailed by the bois.";
+                    myMail.Body = $"You are giving a gift to {reciever.Name}!<br><br>Merry Christmas!.";
                     myMail.BodyEncoding = System.Text.Encoding.UTF8;
                     
                     // text or html

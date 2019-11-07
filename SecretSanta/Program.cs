@@ -40,6 +40,8 @@ namespace SecretSanta
                         //break;
                     case "generatepairs":
                         participantManager.GeneratePairs();
+                        break;
+                    case "listpairs":
                         participantManager.ListPairs();
                         break;
                     case "addunallowedpair":
@@ -64,7 +66,7 @@ namespace SecretSanta
         private static void PrintHelp()
         {
             Console.WriteLine("These are the commands that you can use:");
-            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nsend emails\nhelp\nquit");
+            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nlistpairs\nsend emails\nhelp\nquit");
 
         }
     }
