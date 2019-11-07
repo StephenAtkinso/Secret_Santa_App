@@ -53,7 +53,6 @@ namespace SecretSanta
 						break;
                     case "help":
                         PrintHelp();
-                        emailManager.showDate();
                         break;
                     default:
                         Console.ForegroundColor = System.ConsoleColor.Red;

@@ -42,6 +42,7 @@ namespace SecretSanta
             }
         }
 
+        //ToDo
         //Seperate Lists for senders and recievers and take out when used
         //Make a method to generate the random number
         public void GeneratePairs()

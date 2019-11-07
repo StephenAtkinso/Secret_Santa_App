@@ -14,12 +14,12 @@ namespace SecretSanta
         {
             if (savingParticipants.Count > 0)
             {
-                string path = @"Users/stephenatkinson/Projects/SecretSanta/poo.txt";
+                string path = @"Users/stephenatkinson/Projects/SecretSanta/testFileWrite.txt";
                 using (StreamWriter test = File.CreateText(@path))
                 {
            
                     //Macintosh HD\Users\stephenatkinson\Projects\SecretSanta\poo.txt
-                    test.WriteLine("Work You Fuck!");
+                    test.WriteLine("If you are reading this and the file is in teh write place this is working");
 
                     test.Flush(); 
 
