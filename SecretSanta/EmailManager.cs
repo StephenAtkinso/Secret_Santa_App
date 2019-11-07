@@ -43,7 +43,7 @@ namespace SecretSanta
 
                     // set subject and encoding
                     var theDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-                    myMail.Subject = $"Secret Santa Test Run {theDate}";
+                    myMail.Subject = $"Secret Santa {theDate}";
                     myMail.SubjectEncoding = System.Text.Encoding.UTF8;
 
                     // set body-message and encoding
@@ -61,6 +61,13 @@ namespace SecretSanta
             {
                 Console.WriteLine($"Couldn't send email. Exception: {ex.ToString()}" );
             }
+        }
+
+        public void showDate()
+        {
+            var testDate = DateTime.Today;
+            var testTime = DateTime.Now;
+            Console.WriteLine($"The date will be shown as {testDate} and the time is {testTime}");
         }
     }
 }
