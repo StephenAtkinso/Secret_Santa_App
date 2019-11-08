@@ -19,7 +19,7 @@ namespace SecretSanta
 
             while (notQuit)
             {
-                Console.WriteLine("Enter what you would like to do: ");
+                ConsoleLogger.LogInformationUnspaced("Enter what you would like to do: ");
                 string userPref = Console.ReadLine();
                 switch (userPref.ToLower().Replace(" ", "")) {
 
@@ -55,9 +55,7 @@ namespace SecretSanta
                         PrintHelp();
                         break;
                     default:
-                        Console.ForegroundColor = System.ConsoleColor.Red;
-                        Console.WriteLine("Command not recognised. Type help to see a list of commands");
-                        Console.ResetColor();
+                        ConsoleLogger.LogFailure("Command not recognised. Type help to see a list of commands");
                         break;
                 }
             }
@@ -65,8 +63,8 @@ namespace SecretSanta
 
         private static void PrintHelp()
         {
-            Console.WriteLine("These are the commands that you can use:");
-            Console.WriteLine("add user\nadd unallowed pair\nlist user\ngenerate pairs\nlistpairs\nsend emails\nhelp\nquit");
+            ConsoleLogger.LogInformationUnspaced("These are the commands that you can use:");
+            ConsoleLogger.LogInformationSpaced("add user\nadd unallowed pair\nlist user\ngenerate pairs\nlistpairs\nsend emails\nhelp\nquit");
 
         }
     }

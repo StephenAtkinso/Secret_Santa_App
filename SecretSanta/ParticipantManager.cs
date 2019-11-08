@@ -21,13 +21,15 @@ namespace SecretSanta
         //Ensure no duplicate name or email addresses
         public void AddParticipant()
         {
-            Console.WriteLine("Enter Participant Name: ");
+            ConsoleLogger.LogInformationUnspaced("Enter Participant Name: ");
             string name = Console.ReadLine();
-            Console.WriteLine("Enter Participant Email: ");
+            ConsoleLogger.LogInformationUnspaced("Enter Participant Email: ");
             string email = Console.ReadLine();
 
-            Participant part1 = new Participant(name, email);
-            _participants.Add(part1);
+            Participant newParticipant = new Participant(name, email);
+            _participants.Add(newParticipant);
+
+            ConsoleLogger.LogSuccess("Participant Added");
         }
 
         public void ListParticipants()
